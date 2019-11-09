@@ -12,7 +12,7 @@ const db = require('../models');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '5000');
+var port = normalizePort(process.env.PORT || '5001');
 // app.set('port', port);
 
 /**
@@ -30,7 +30,7 @@ server.listen(port, () => {
     .sync({ force: false, logging: false })
     .then(() => {
       console.log('sequelize connect success');
-      console.log('server listen on http://127.0.0.1:5000');
+      console.log('server listen on http://127.0.0.1:5001');
     })
     .catch(err => {
       console.log(err);
