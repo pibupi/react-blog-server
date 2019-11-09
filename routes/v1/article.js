@@ -1,7 +1,6 @@
 const router = require('koa-router')();
-const UserController = require('../../controller/article');
+const ArticleController = require('../../controller/article');
 router.prefix('/api/v1');
 
-router.get('/article/list', UserController.getArticleList);
-// router.post('/article/login', UserController.login);
+router.get('/article/list', ArticleController.getArticleList);
 module.exports = router;
