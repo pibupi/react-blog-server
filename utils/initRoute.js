@@ -8,7 +8,9 @@ class AutoRegRouter {
   }
   static initLoadRouters() {
     const apiDirectory = `${process.cwd()}/routes/v1`;
-    requireDirectory(module, apiDirectory, { visit: whenLoadModule });
+    requireDirectory(module, apiDirectory, {
+      visit: whenLoadModule
+    });
     // 实现路由的自动注册
     function whenLoadModule(obj) {
       if (obj instanceof Router) {
