@@ -1,8 +1,7 @@
 const UserModel = require('../dao/user');
 class UserController {
   static async register(ctx) {
-    let { username, password } = ctx.request.body;
-    console.log(username, password);
+    let { username, displayName, password } = ctx.request.body;
     try {
       const user = await UserModel.findUser(username);
       if (user) {
@@ -14,7 +13,11 @@ class UserController {
       } else {
         try {
           const saltPassword = await UserModel.encrypt(password);
-          await UserModel.createUser({ username, password: saltPassword });
+          await UserModel.createUser({
+            username,
+            displayName,
+            password: saltPassword
+          });
           ctx.response.status = 200;
           ctx.body = {
             code: 0,
@@ -36,7 +39,6 @@ class UserController {
   }
   static async login(ctx) {
     let { username, password } = ctx.request.body;
-    console.log(username, password);
     try {
       const user = await UserModel.findUser(username);
       if (!user) {
@@ -62,6 +64,7 @@ class UserController {
             code: 0,
             msg: '登录成功',
             username: user.username,
+            displayName: user.displayName,
             token
           };
         }

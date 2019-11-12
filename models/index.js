@@ -13,30 +13,31 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, {
-    host:config.host,
-    dialect:config.dialect,
-    operatorsAliases:config.operatorsAliases,
-    timezone:config.timezone,
-    define:{
-      timestampa:true,
-      paranoid:true,
-      createAt:'created_at',
-      updateAt:'updated_at',
-      deletedAt:'deleted_at',
-      underscored:true
+    host: config.host,
+    dialect: config.dialect,
+    operatorsAliases: config.operatorsAliases,
+    timezone: config.timezone,
+    define: {
+      timestampa: true,
+      paranoid: true,
+      createAt: 'created_at',
+      updateAt: 'updated_at',
+      deletedAt: 'deleted_at',
+      underscored: true
     },
-    pool:{
-      max:5,
-      min:0,
-      idle:10000
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
     }
   });
 }
 
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    return (
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+    );
   })
   .forEach(file => {
     const model = sequelize['import'](path.join(__dirname, file));

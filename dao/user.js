@@ -4,7 +4,11 @@ const { encrypt, comparePassword } = require('../utils/bcrypt');
 const { createToken } = require('../utils/token');
 class UserModel {
   static async findUser(username) {
-    return await User.findOne({ where: { username } });
+    return await User.findOne({
+      where: {
+        username
+      }
+    });
   }
   static async encrypt(password) {
     return encrypt(password);
@@ -12,6 +16,7 @@ class UserModel {
   static async createUser(data) {
     return await User.create({
       username: data.username,
+      displayName: data.displayName,
       password: data.password
     });
   }
