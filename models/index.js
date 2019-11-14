@@ -17,14 +17,14 @@ if (config.use_env_variable) {
     dialect: config.dialect,
     operatorsAliases: config.operatorsAliases,
     timezone: config.timezone,
-    define: {
-      timestampa: true,
-      paranoid: true,
-      createAt: 'created_at',
-      updateAt: 'updated_at',
-      deletedAt: 'deleted_at',
-      underscored: true
-    },
+    // define: {
+    //   timestampa: true,
+    //   paranoid: true,
+    //   createAt: 'created_at',
+    //   updateAt: 'updated_at',
+    //   deletedAt: 'deleted_at',
+    //   underscored: true
+    // },
     pool: {
       max: 5,
       min: 0,
