@@ -1,7 +1,7 @@
-const moment = require('moment')
+const moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
   const Article = sequelize.define(
-    "article",
+    'article',
     {
       id: {
         type: DataTypes.INTEGER(11),
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      desc:{
+      desc: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -34,7 +34,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: DataTypes.NOW,
         get() {
-          return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss')
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
         }
       },
       updatedAt: {
@@ -42,7 +44,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: DataTypes.NOW,
         get() {
-          return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss')
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
         }
       },
       deteledAt: {
@@ -50,14 +54,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: DataTypes.NOW,
         get() {
-          return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD HH:mm:ss')
+          return moment(this.getDataValue('createdAt')).format(
+            'YYYY-MM-DD HH:mm:ss'
+          );
         }
       }
     },
     {
-      tableName: "article",
-      charset: "utf8mb4",
-      collate: "utf8mb4_bin",
+      tableName: 'article',
+      charset: 'utf8mb4',
+      collate: 'utf8mb4_bin',
       timestamps: true
     }
   );

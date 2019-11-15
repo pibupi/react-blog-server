@@ -2,8 +2,12 @@ const ArticleModel = require('../dao/articleList');
 class ArticleController {
   static async getArticleList(ctx) {
     try {
-      // 分页还未实现
-      const articleList = await ArticleModel.findArticleList();
+      let { offset, limited, keywords } = ctx.query;
+      const articleList = await ArticleModel.findArticleList(
+        offset,
+        limited,
+        keywords
+      );
       if (articleList) {
         ctx.body = {
           code: 0,
@@ -73,23 +77,23 @@ class ArticleController {
     }
   }
   static async deleteArticle(ctx) {
-    try{
-      const {id} = ctx.request.body
-      console.log(id)
-      if(id != -1){
-        await ArticleModel.deleteArticle(id) 
+    try {
+      const { id } = ctx.request.body;
+      console.log(id);
+      if (id != -1) {
+        await ArticleModel.deleteArticle(id);
         ctx.body = {
-          code:0,
-          msg:'文章删除成功'
-        }
-      }else{
+          code: 0,
+          msg: '文章删除成功'
+        };
+      } else {
         ctx.body = {
-          code:403,
-          msg:'文章id不能为空'
-        }
+          code: 403,
+          msg: '文章id不能为空'
+        };
       }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   }
   static async uploadImg(ctx) {
