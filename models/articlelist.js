@@ -27,7 +27,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       categoryId: {
         type: DataTypes.INTEGER(11),
-        allowNull: true
+        allowNull: false
+      },
+      url:{
+        type: DataTypes.STRING,
+        allowNull: false
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -67,5 +71,11 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   );
+  // Article.associate = models => {
+  //   Article.belongsTo(models.category, {
+  //     foreignKey: 'categoryId',
+  //     targetKey:'id'
+  //   })
+  // }
   return Article;
 };
