@@ -1,5 +1,6 @@
 const db = require('../models');
 const Sequelize = require('sequelize');
+const CategoryModel = require('../models/category')
 const Op = Sequelize.Op;
 const Article = db.sequelize.import('../models/articlelist');
 class ArticleModel {
@@ -16,11 +17,16 @@ class ArticleModel {
       row: true
     });
   }
+  static async findAllArticles() {
+    return await Article.findAll();
+  }
   static async createArticle(data) {
     return await Article.create({
       title: data.title,
       content: data.content,
-      desc: data.desc
+      desc: data.desc,
+      url:data.url,
+      categoryId:data.categoryId
     });
   }
   static async findArticleById(id) {
