@@ -1,5 +1,8 @@
 const ArticleModel = require('../dao/articleList');
 class ArticleController {
+  /**
+   * @func getArticleList - 更新分页文章
+   */
   static async getArticleList(ctx) {
     try {
       let { offset, limited, keywords } = ctx.query;
@@ -11,7 +14,10 @@ class ArticleController {
       if (articleList) {
         ctx.body = {
           code: 0,
-          data: articleList,
+          data: {
+            count: articleList.count,
+            articleList: articleList.rows
+          },
           msg: '获取文章列表成功'
         };
       } else {
@@ -24,6 +30,9 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func getArticleAllList - 更新所有文章
+   */
   static async getArticleAllList(ctx) {
     try {
       const articleList = await ArticleModel.findAllArticles();
@@ -43,6 +52,9 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func getArticleById - 更新文章详情
+   */
   static async getArticleById(ctx) {
     const { id } = ctx.params;
     try {
@@ -62,17 +74,20 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func addArticleList - 新增文章
+   * @param {String} url - 图片上传的路径
+   * @param {Object} content - 文章内容
+   */
   static async addArticleList(ctx) {
     try {
-      const { content, title, desc ,url,categoryId} = ctx.request.body;
-      // console.log(articlePic[0].size)
-      await ArticleModel.createArticle({
+      const { content, title, desc, url, categoryId } = ctx.request.body;
+      await ArticleModel.addArticle({
         content,
         title,
         desc,
         url,
         categoryId
-        // articlePic
       });
       ctx.body = {
         code: 0,
@@ -82,14 +97,20 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func updateArticle - 更新文章
+   * @description 这个接口的上传还没做
+   */
   static async updateArticle(ctx) {
     try {
-      const { content, title, desc, id } = ctx.request.body;
+      const { content, title, desc, url, id, categoryId } = ctx.request.body;
       await ArticleModel.updateArticle({
         content,
         title,
         desc,
-        id
+        id,
+        url,
+        categoryId
       });
       ctx.body = {
         code: 0,
@@ -99,10 +120,12 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func deleteArticle - 删除文章
+   */
   static async deleteArticle(ctx) {
     try {
       const { id } = ctx.request.body;
-      console.log(id);
       if (id != -1) {
         await ArticleModel.deleteArticle(id);
         ctx.body = {
@@ -119,45 +142,13 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func uploadImg - 图片上传
+   */
   static async uploadImg(ctx) {
-    // console.log(ctx.request.body)
-    // (ctx) => {
-    // hehe 是要上传图片数据的key值,必须和前端保持统一
-    // {
-    //   'hehe':图片数据
-    // }
-  //   console.log('ctx', ctx);
-  //   let { mimetype } = ctx.file;
-  //   // let {mimetype} = ctx;
-  //   console.log(mimetype)
-  //   let types = ['jpg', 'jpeg', 'png', 'gif']; // 允许上传的数据类型
-  //   let tmpType = mimetype.split('/')[1];
-  //   if (size > 500000) {
-  //     // return res.send({ errO: -1, msg: '尺寸过大' });
-  //     ctx.body = {
-  //       code: 1,
-  //       msg: '尺寸过大'
-  //     };
-  //   } else 
-  //   if (types.indexOf(tmpType) == -1) {
-  //     // return res.send({ err: -1, msg: '媒体类型错误' });
-  //     ctx.body = {
-  //       code: 1,
-  //       msg: '媒体类型错误'
-  //     };
-  //   } else {
-  //     let url = `http://localhost:5001/upload/'+ctx.req.file.filename//返回文件名`;
-  //     // res.send({ code: 0, msg: '上传成功', img: url });
-  //     ctx.body = {
-  //       code: 0,
-  //       msg: '上传成功',
-  //       imgUrl: url
-  //     };
-  //   }
-  //   // });
-  // }
-  // static async savePic(ctx) {
-
+    ctx.body = {
+      url: 'http://localhost:5001/upload/' + ctx.req.file.filename //返回文件名
+    };
   }
 }
 module.exports = ArticleController;
