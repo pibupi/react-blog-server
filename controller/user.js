@@ -1,5 +1,8 @@
 const UserModel = require('../dao/user');
 class UserController {
+  /**
+   * @func register -注册用户
+   */
   static async register(ctx) {
     let { username, displayName, password } = ctx.request.body;
     try {
@@ -37,6 +40,9 @@ class UserController {
       };
     }
   }
+  /**
+   * @func login -用户登录
+   */
   static async login(ctx) {
     let { username, password } = ctx.request.body;
     try {

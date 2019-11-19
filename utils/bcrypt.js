@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 /**
  * @func encrypt - 加密
- * @param {String} - 密码
+ * @param {password} - 密码
  */
 exports.encrypt = password => {
   return new Promise((resolve, reject) => {
