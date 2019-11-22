@@ -1,5 +1,5 @@
-const CategoryModel = require('../dao/categoryList');
-class ArticleController {
+const CategoryModel = require('../dao/category');
+class CategoryController {
   /**
    * @func getCategoryList - 获取分页分类
    */
@@ -30,34 +30,21 @@ class ArticleController {
       console.log(err);
     }
   }
-  /**
-   * @func getCategoryAll - 获取所有分类
-   */
-  static async getCategoryAll(ctx) {
-    try {
-      const categoryList = await CategoryModel.findAllCategoryList();
-      if (categoryList) {
-        ctx.body = {
-          code: 0,
-          data: categoryList,
-          msg: '获取分类成功'
-        };
-      } else {
-        ctx.body = {
-          code: 1,
-          msg: '获取失败'
-        };
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+
   /**
    * @func addCategory - 新增分类
    */
   static async addCategory(ctx) {
     try {
       const { category_name } = ctx.request.body;
+      const category = await CategoryModel.findCategory(category_name);
+      if (category) {
+        ctx.response.status = 200;
+        ctx.body = {
+          code: 1,
+          msg: '该分类已存在'
+        };
+      }
       await CategoryModel.addCategory({
         category_name
       });
@@ -106,5 +93,27 @@ class ArticleController {
       console.log(err);
     }
   }
+  /**
+   * @func getCategoryAll - 前台获取所有分类
+   */
+  static async getCategoryAll(ctx) {
+    try {
+      const categoryList = await CategoryModel.findAllCategoryList();
+      if (categoryList) {
+        ctx.body = {
+          code: 0,
+          data: categoryList,
+          msg: '获取分类成功'
+        };
+      } else {
+        ctx.body = {
+          code: 1,
+          msg: '获取失败'
+        };
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
-module.exports = ArticleController;
+module.exports = CategoryController;

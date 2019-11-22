@@ -1,7 +1,7 @@
 const router = require('koa-router')();
 const multer = require('koa-multer');
 const path = require('path');
-const UploadController = require('../../controller/upload');
+const UploadController = require('../../../controller/upload');
 
 /**
  * @func diskStorage - 处理文件上传
@@ -10,7 +10,7 @@ const UploadController = require('../../controller/upload');
  */
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, path.join(__dirname, '../..', 'public/upload'));
+    cb(null, path.join(__dirname, '../../..', 'public/upload'));
   },
   filename: function(req, file, cb) {
     var ext = path.extname(file.originalname);

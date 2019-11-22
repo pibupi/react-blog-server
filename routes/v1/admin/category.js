@@ -1,6 +1,6 @@
 const router = require('koa-router')();
-const CategoryController = require('../../controller/category');
-router.prefix('/api/v1');
+const CategoryController = require('../../../controller/category');
+router.prefix('/api/v1/admin');
 
 // 获取分类列表
 router.get('/category/list', CategoryController.getCategoryList);

@@ -5,7 +5,6 @@
     "database": "react-blog-development",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false,
     "port": 3306,
     "timezone": "+08:00"
   },
@@ -15,7 +14,6 @@
     "database": "react-blog-test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false,
     "port": 3306
   },
   "production": {
@@ -24,7 +22,6 @@
     "database": "react-blog-production",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false,
     "port": 3306
   }
 }

@@ -1,7 +1,7 @@
-const ArticleModel = require('../dao/articleList');
+const ArticleModel = require('../dao/article');
 class ArticleController {
   /**
-   * @func getArticleList - 更新分页文章
+   * @func getArticleList - 获取分页文章
    */
   static async getArticleList(ctx) {
     try {
@@ -31,63 +31,27 @@ class ArticleController {
     }
   }
   /**
-   * @func getArticleAllList - 更新所有文章
-   */
-  static async getArticleAllList(ctx) {
-    try {
-      const articleList = await ArticleModel.findAllArticles();
-      if (articleList) {
-        ctx.body = {
-          code: 0,
-          data: articleList,
-          msg: '获取文章列表成功'
-        };
-      } else {
-        ctx.body = {
-          code: 1,
-          msg: '获取失败'
-        };
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  /**
-   * @func getArticleById - 更新文章详情
-   */
-  static async getArticleById(ctx) {
-    const { id } = ctx.params;
-    try {
-      const article = await ArticleModel.findArticleById(id);
-      if (article) {
-        ctx.body = {
-          code: 0,
-          data: article
-        };
-      } else {
-        ctx.body = {
-          code: 1,
-          msg: '资源不存在'
-        };
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  /**
    * @func addArticleList - 新增文章
    * @param {String} url - 图片上传的路径
    * @param {Object} content - 文章内容
    */
   static async addArticleList(ctx) {
     try {
-      const { content, title, desc, url, categoryId } = ctx.request.body;
+      const {
+        content,
+        title,
+        desc,
+        url,
+        category_name,
+        category_id
+      } = ctx.request.body;
       await ArticleModel.addArticle({
         content,
         title,
         desc,
         url,
-        categoryId
+        category_name,
+        category_id
       });
       ctx.body = {
         code: 0,
@@ -99,18 +63,26 @@ class ArticleController {
   }
   /**
    * @func updateArticle - 更新文章
-   * @description 这个接口的上传还没做
    */
   static async updateArticle(ctx) {
     try {
-      const { content, title, desc, url, id, categoryId } = ctx.request.body;
+      const {
+        content,
+        title,
+        desc,
+        url,
+        id,
+        category_name,
+        category_id
+      } = ctx.request.body;
       await ArticleModel.updateArticle({
         content,
         title,
         desc,
         id,
         url,
-        categoryId
+        category_name,
+        category_id
       });
       ctx.body = {
         code: 0,
@@ -143,12 +115,82 @@ class ArticleController {
     }
   }
   /**
-   * @func uploadImg - 图片上传
+   * @func getArticleAllList - 前台获取所有文章
+   * @description 此接口待完善！！！
    */
-  static async uploadImg(ctx) {
-    ctx.body = {
-      url: 'http://localhost:5001/upload/' + ctx.req.file.filename //返回文件名
-    };
+  static async getArticleAllList(ctx) {
+    const { current, keywords, pageSize } = ctx.query;
+    try {
+      const articleList = await ArticleModel.findAllArticles(
+        current,
+        pageSize,
+        keywords
+      );
+      console.log(articleList);
+      if (articleList) {
+        ctx.body = {
+          code: 0,
+          data: {
+            count: articleList.count,
+            articleList: articleList.rows
+          },
+          msg: '获取文章列表成功'
+        };
+      } else {
+        ctx.body = {
+          code: 1,
+          msg: '获取失败'
+        };
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  /**
+   * @func getArticleById - 前台获取文章详情
+   */
+  static async getArticleById(ctx) {
+    const { id } = ctx.params;
+    try {
+      const article = await ArticleModel.findArticleById(id);
+      if (article) {
+        ctx.body = {
+          code: 0,
+          data: article
+        };
+      } else {
+        ctx.body = {
+          code: 1,
+          msg: '资源不存在'
+        };
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  /**
+   * @func getArticleOfCateogry - 前台根据分类获取文章列
+   * @param {String} name - category_name 分了名称外键
+   */
+  static async getArticleOfCateogry(ctx) {
+    try {
+      const { id } = ctx.params;
+      let articleOfCategory = await ArticleModel.getArticleOfCateogry(id);
+      if (articleOfCategory) {
+        ctx.body = {
+          code: 0,
+          msg: '获取文章成功',
+          data: articleOfCategory
+        };
+      } else {
+        ctx.body = {
+          code: 403,
+          msg: '分类name不能为空'
+        };
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 module.exports = ArticleController;
