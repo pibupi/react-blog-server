@@ -1,6 +1,7 @@
 const router = require('koa-router')();
-const UserController = require('../../controller/user');
-router.prefix('/api/v1');
+const UserController = require('../../../controller/user');
+router.prefix('/api/v1/admin');
+
 // 注册
 router.post('/user/register', UserController.register);
 // 登录

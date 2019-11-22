@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+let db = {};
 
 let sequelize;
 if (config.use_env_variable) {
@@ -15,7 +15,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
     dialect: config.dialect,
-    operatorsAliases: config.operatorsAliases,
+    // operatorsAliases: config.operatorsAliases,
     timezone: config.timezone,
     // define: {
     //   timestampa: true,
@@ -32,7 +32,7 @@ if (config.use_env_variable) {
     }
   });
 }
-
+// sequelize.sync({force: true});
 fs.readdirSync(__dirname)
   .filter(file => {
     return (

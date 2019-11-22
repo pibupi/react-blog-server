@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
+      category_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      category_id: {
+        type: DataTypes.INTEGER(11),
+        allowNull: false
+      },
       content: {
         type: DataTypes.TEXT,
         allowNull: true
@@ -25,11 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
-      categoryId: {
-        type: DataTypes.INTEGER(11),
-        allowNull: false
-      },
-      url:{
+      url: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -71,11 +75,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true
     }
   );
-  // Article.associate = models => {
-  //   Article.belongsTo(models.category, {
-  //     foreignKey: 'categoryId',
-  //     targetKey:'id'
-  //   })
-  // }
   return Article;
 };
