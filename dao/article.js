@@ -1,6 +1,7 @@
 const db = require('../models');
 const Op = db.Sequelize.Op;
 const Article = db.sequelize.import('../models/articlelist');
+const Like = db.sequelize.import('../models/like');
 class ArticleModel {
   /**
    * @func findArticleList - 获取文章分页数据
@@ -118,9 +119,42 @@ class ArticleModel {
   /**
    * @func findArticleById - 前台获取文章详情
    */
-  static async findArticleById(id) {
+  static async findArticleById(res) {
+    let { article_id, user_id } = res;
+    // 获取该篇文章详情内容
+    let article = await Article.findOne({
+      where: { id: article_id }
+    });
+    // 根据用户id获取该用户点赞过的所有文章记录
+    let likeArticles = await Like.findAll({
+      where: { user_id }
+    });
+    article_id = parseInt(article_id);
+    // 在该用户所有点赞过的文章中过滤是否该篇文章被点赞过
+    let one = likeArticles.find(item => item.article_id === article_id);
+    // 如果点赞过则把该篇文章的点赞状态返回给前端，前端据此来展示点赞红心
+    if (one) {
+      let oneArticle = JSON.parse(JSON.stringify(article));
+      let articles = {
+        ...oneArticle,
+        like_status: one.like_status
+      };
+      return articles;
+    } else {
+      return article;
+    }
+  }
+  /**
+   * @func updateArticleList - 前台点赞文章点赞数增加
+   */
+  static async updateArticleList(res) {
+    let { article_id } = res;
     return await Article.findOne({
-      where: { id }
+      where: {
+        id: article_id
+      }
+    }).then(res => {
+      return res.increment('like_count', { by: 1 });
     });
   }
 }

@@ -1,4 +1,5 @@
 const ArticleModel = require('../dao/article');
+const CommentModel = require('../dao/comment');
 class ArticleController {
   /**
    * @func getArticleList - 获取分页文章
@@ -126,7 +127,6 @@ class ArticleController {
         pageSize,
         keywords
       );
-      console.log(articleList);
       if (articleList) {
         ctx.body = {
           code: 0,
@@ -147,16 +147,21 @@ class ArticleController {
     }
   }
   /**
-   * @func getArticleById - 前台获取文章详情
+   * @func getArticleById - 前台获取文章详情及评论
    */
   static async getArticleById(ctx) {
-    const { id } = ctx.params;
+    const res = ctx.query;
     try {
-      const article = await ArticleModel.findArticleById(id);
+      const article = await ArticleModel.findArticleById(res);
+      const comments = await CommentModel.getComment(res.article_id);
       if (article) {
         ctx.body = {
           code: 0,
-          data: article
+          data: {
+            article,
+            comments
+          },
+          msg: '获取文章详情成功'
         };
       } else {
         ctx.body = {
