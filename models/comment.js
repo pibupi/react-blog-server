@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER(11),
         allowNull: false
       },
+      reply_like_count: {
+        type: DataTypes.INTEGER(11),
+        allowNull: true,
+        defaultValue: 0
+      },
       displayName: {
         type: DataTypes.STRING(50),
         allowNull: false

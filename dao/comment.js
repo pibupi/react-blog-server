@@ -1,5 +1,6 @@
 const db = require('../models');
 const Comment = db.sequelize.import('../models/comment');
+const Answer = db.sequelize.import('../models/answer');
 class CommentModel {
   /**
    * @func createComment -前台创建用户
@@ -22,6 +23,26 @@ class CommentModel {
         article_id
       },
       order: [['id', 'DESC']]
+    });
+  }
+  static async createAnswerComment(
+    parent_id,
+    displayName,
+    answerContent,
+    article_id
+  ) {
+    return await Answer.create({
+      parent_id,
+      displayName,
+      answerContent,
+      article_id
+    });
+  }
+  static async getAnswerComments(article_id) {
+    return await Answer.findAll({
+      where: {
+        article_id
+      }
     });
   }
 }

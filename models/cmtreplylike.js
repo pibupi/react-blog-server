@@ -1,7 +1,7 @@
 const moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
-  const Like = sequelize.define(
-    'like',
+  const ComReplylike = sequelize.define(
+    'comreplylike',
     {
       id: {
         type: DataTypes.INTEGER(11),
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      like_status: {
+      reply_like_status: {
         type: DataTypes.INTEGER(11),
         allowNull: true,
         defaultValue: 0
@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
       user_id: {
+        type: DataTypes.INTEGER(11),
+        allowNull: true
+      },
+      comment_id: {
         type: DataTypes.INTEGER(11),
         allowNull: true
       },
@@ -34,11 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      tableName: 'like',
+      tableName: 'comreplylike',
       charset: 'utf8mb4',
       collate: 'utf8mb4_bin',
       timestamps: true
     }
   );
-  return Like;
+  return ComReplylike;
 };

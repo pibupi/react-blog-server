@@ -1,5 +1,5 @@
 class UploadController {
- /**
+  /**
    * @func uploadImg - 图片上传
    */
   static async uploadImg(ctx) {
