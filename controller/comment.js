@@ -1,5 +1,5 @@
 const CommentModel = require('../dao/comment');
-class UserController {
+class CommentController {
   /**
    * @func addComment -前台添加评论
    */
@@ -15,5 +15,27 @@ class UserController {
       console.log(err);
     }
   }
+  static async addAnswerComment(ctx) {
+    let {
+      parent_id,
+      displayName,
+      answerContent,
+      article_id
+    } = ctx.request.body;
+    try {
+      await CommentModel.createAnswerComment(
+        parent_id,
+        displayName,
+        answerContent,
+        article_id
+      );
+      ctx.body = {
+        code: 0,
+        msg: '添加评论成功'
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
-module.exports = UserController;
+module.exports = CommentController;

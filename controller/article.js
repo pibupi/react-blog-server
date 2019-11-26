@@ -1,5 +1,6 @@
 const ArticleModel = require('../dao/article');
 const CommentModel = require('../dao/comment');
+const CmtReplyLikeModel = require('../dao/cmtreplylike');
 class ArticleController {
   /**
    * @func getArticleList - 获取分页文章
@@ -154,12 +155,25 @@ class ArticleController {
     try {
       const article = await ArticleModel.findArticleById(res);
       const comments = await CommentModel.getComment(res.article_id);
+      const answerComments = await CommentModel.getAnswerComments(
+        res.article_id
+      );
+      const replyLikeCommentStatus = await CmtReplyLikeModel.getReplyLikeCommentStatusByUserId(
+        res.user_id
+      );
+      const replyLikeAnswerStatus = await CmtReplyLikeModel.getReplyLikeAnswerStatusByUserId(
+        res.user_id
+      );
+
       if (article) {
         ctx.body = {
           code: 0,
           data: {
             article,
-            comments
+            comments,
+            answerComments,
+            replyLikeCommentStatus,
+            replyLikeAnswerStatus
           },
           msg: '获取文章详情成功'
         };
