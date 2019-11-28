@@ -30,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: 0
       },
+      comment_count:{
+        type: DataTypes.INTEGER(11),
+        allowNull: true,
+        defaultValue: 0
+      },
+      look_time:{
+        type: DataTypes.INTEGER(11),
+        allowNull: true,
+        defaultValue: 0
+      },
       desc: {
         type: DataTypes.STRING,
         allowNull: false

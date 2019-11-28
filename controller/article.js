@@ -45,7 +45,8 @@ class ArticleController {
         desc,
         url,
         category_name,
-        category_id
+        category_id,
+        author
       } = ctx.request.body;
       await ArticleModel.addArticle({
         content,
@@ -53,7 +54,8 @@ class ArticleController {
         desc,
         url,
         category_name,
-        category_id
+        category_id,
+        author
       });
       ctx.body = {
         code: 0,

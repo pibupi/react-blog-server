@@ -36,7 +36,8 @@ class ArticleModel {
     desc,
     url,
     category_name,
-    category_id
+    category_id,
+    author
   }) {
     return await Article.create({
       title,
@@ -44,7 +45,8 @@ class ArticleModel {
       desc,
       url,
       category_name,
-      category_id
+      category_id,
+      author
     });
   }
   /**
@@ -124,6 +126,11 @@ class ArticleModel {
     // 获取该篇文章详情内容
     let article = await Article.findOne({
       where: { id: article_id }
+    });
+    await Article.findOne({
+      where: { id: article_id }
+    }).then(res => {
+      res.increment('look_time', { by: 1 });
     });
     // 根据用户id获取该用户点赞过的所有文章记录
     let likeArticles = await Like.findAll({

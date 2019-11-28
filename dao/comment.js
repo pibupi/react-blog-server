@@ -1,16 +1,24 @@
 const db = require('../models');
 const Comment = db.sequelize.import('../models/comment');
 const Answer = db.sequelize.import('../models/answer');
+const Article = db.sequelize.import('../models/articlelist');
 class CommentModel {
   /**
    * @func createComment -前台创建用户
    * @param {String} displayName -昵称
    */
   static async createComment(content, article_id, displayName) {
-    return await Comment.create({
+    await Comment.create({
       article_id,
       displayName,
       content
+    });
+    await Article.findOne({
+      where: {
+        id: article_id
+      }
+    }).then(async res => {
+      return await res.increment('comment_count', { by: 1 });
     });
   }
   /**
@@ -31,11 +39,18 @@ class CommentModel {
     answerContent,
     article_id
   ) {
-    return await Answer.create({
+    await Answer.create({
       parent_id,
       displayName,
       answerContent,
       article_id
+    });
+    await Article.findOne({
+      where: {
+        id: article_id
+      }
+    }).then(async res => {
+      await res.increment('comment_count', { by: 1 });
     });
   }
   static async getAnswerComments(article_id) {
