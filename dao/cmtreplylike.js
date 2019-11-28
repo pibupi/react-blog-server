@@ -3,7 +3,6 @@ const CmtReplyLike = db.sequelize.import('../models/cmtreplylike');
 const AnsReplyLike = db.sequelize.import('../models/ansreplylike');
 const Comment = db.sequelize.import('../models/comment');
 const Answer = db.sequelize.import('../models/answer');
-
 class UserModel {
   /**
    * @func clickLikeArticle - 前台点赞逻辑处理
