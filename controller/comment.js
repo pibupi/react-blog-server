@@ -1,7 +1,7 @@
 const CommentModel = require('../dao/comment');
 class CommentController {
   /**
-   * @func addComment -前台添加评论
+   * @func addComment -前台添加父级评论
    */
   static async addComment(ctx) {
     try {
@@ -15,6 +15,9 @@ class CommentController {
       console.log(err);
     }
   }
+  /**
+   * @func addAnswerComment -前台添加子级评论
+   */
   static async addAnswerComment(ctx) {
     let {
       parent_id,

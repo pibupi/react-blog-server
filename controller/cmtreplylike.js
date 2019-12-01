@@ -1,7 +1,7 @@
 const CmtReplyLikeModel = require('../dao/cmtreplylike');
 class ReplylikeController {
   /**
-   * @func clickLikeArticle - 前台点赞文章
+   * @func replylike - 前台父级评论点赞
    */
   static async replylike(ctx) {
     try {
@@ -22,6 +22,9 @@ class ReplylikeController {
       console.log(err);
     }
   }
+  /**
+   * @func replychildlike - 前台子级评论点赞
+   */
   static async replychildlike(ctx) {
     try {
       const res = ctx.request.body;

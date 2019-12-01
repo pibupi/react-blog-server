@@ -1,4 +1,5 @@
 const db = require('../models');
+const Op = db.Sequelize.Op;
 const User = db.sequelize.import('../models/user');
 const { encrypt, comparePassword } = require('../utils/bcrypt');
 const { createToken } = require('../utils/token');
@@ -14,6 +15,25 @@ class UserModel {
     });
   }
   /**
+   * @func findUserList -查找用户
+   */
+  static async findUserList(offset, limited, keywords) {
+    return await User.findAndCountAll({
+      where: {
+        [Op.or]: [
+          {
+            username: {
+              [Op.like]: '%' + keywords + '%'
+            }
+          }
+        ]
+      },
+      offset: (offset - 1) * +limited,
+      limit: +limited,
+      order: [['id', 'DESC']]
+    });
+  }
+  /**
    * @func encrypt -密码加盐
    */
   static async encrypt(password) {
@@ -23,12 +43,39 @@ class UserModel {
    * @func createUser -创建用户
    * @param {String} displayName -昵称
    */
-  static async createUser({ username, displayName, password }) {
+  static async createUser({ username, displayName, password, email ,phone}) {
     return await User.create({
       username,
       displayName,
-      password
+      password,
+      email,
+      phone
     });
+  }
+  /**
+   * @func deleteUser -删除用户
+   * @param {String} id - 用户id
+   */
+  static async deleteUser(id) {
+    console.log(id);
+    return await User.destroy({
+      where: { id }
+    });
+  }
+  /**
+   * @func updateUser -更新用户
+   * @param {String} id - 用户id
+   */
+  static async updateUser(username, displayName, id) {
+    return await User.update(
+      {
+        username,
+        displayName
+      },
+      {
+        where: { id }
+      }
+    );
   }
   /**
    * @func verifyPassword -验证用户输入密码与数据库中的是否一致

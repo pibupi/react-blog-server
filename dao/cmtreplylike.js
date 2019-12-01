@@ -3,9 +3,9 @@ const CmtReplyLike = db.sequelize.import('../models/cmtreplylike');
 const AnsReplyLike = db.sequelize.import('../models/ansreplylike');
 const Comment = db.sequelize.import('../models/comment');
 const Answer = db.sequelize.import('../models/answer');
-class UserModel {
+class CmtreplylikeModel {
   /**
-   * @func clickLikeArticle - 前台点赞逻辑处理
+   * @func createLike - 前台父级评论点赞逻辑处理
    */
   static async createLike(res) {
     let replylikes = await CmtReplyLike.findAll({
@@ -40,6 +40,9 @@ class UserModel {
       return (status = '已点赞过');
     }
   }
+  /**
+   * @func createChildLike - 前台子级评论点赞逻辑处理
+   */
   static async createChildLike(res) {
     let replylikes2 = await AnsReplyLike.findAll({
       where: {
@@ -73,6 +76,9 @@ class UserModel {
       return (status = '已点赞过');
     }
   }
+  /**
+   * @func getReplyLikeCommentStatusByUserId - 前台根据user_id获取父级评论点赞状态
+   */
   static async getReplyLikeCommentStatusByUserId(user_id) {
     return CmtReplyLike.findAll({
       where: {
@@ -80,6 +86,9 @@ class UserModel {
       }
     });
   }
+  /**
+   * @func getReplyLikeAnswerStatusByUserId - 前台根据user_id获取子级评论点赞状态
+   */
   static async getReplyLikeAnswerStatusByUserId(user_id) {
     return AnsReplyLike.findAll({
       where: {
@@ -88,4 +97,4 @@ class UserModel {
     });
   }
 }
-module.exports = UserModel;
+module.exports = CmtreplylikeModel;
