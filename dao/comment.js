@@ -4,7 +4,7 @@ const Answer = db.sequelize.import('../models/answer');
 const Article = db.sequelize.import('../models/articlelist');
 class CommentModel {
   /**
-   * @func createComment -前台创建用户
+   * @func createComment -前台创建父级评论
    * @param {String} displayName -昵称
    */
   static async createComment(content, article_id, displayName) {
@@ -22,8 +22,7 @@ class CommentModel {
     });
   }
   /**
-   * @func getComment -前台获取某篇文章评论
-   * @param {String} displayName -昵称
+   * @func getComment -前台获取父级评论
    */
   static async getComment(article_id) {
     return await Comment.findAll({
@@ -33,6 +32,9 @@ class CommentModel {
       order: [['id', 'DESC']]
     });
   }
+  /**
+   * @func createAnswerComment -前台创建子级评论
+   */
   static async createAnswerComment(
     parent_id,
     displayName,
@@ -53,6 +55,9 @@ class CommentModel {
       await res.increment('comment_count', { by: 1 });
     });
   }
+  /**
+   * @func createAnswerComment -前台获取子级评论
+   */
   static async getAnswerComments(article_id) {
     return await Answer.findAll({
       where: {

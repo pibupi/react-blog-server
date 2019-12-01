@@ -10,7 +10,8 @@ const tokenUnAllowPath = koaJwt({
     /^\/api\/v1\/admin\/user\/login/,
     /^\/api\/v1\/admin\/user\/register/,
     /^\/upload/,
-    /^\/api\/v1\/web/
+    /^\/api\/v1\/web/,
+    /^\/oauth\/redirect/
   ]
 });
 module.exports = tokenUnAllowPath;
