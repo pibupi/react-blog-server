@@ -106,7 +106,6 @@ class UserController {
    */
   static async deleteUsers(ctx) {
     const { id } = ctx.request.body;
-    console.log(id);
     if (id != -1) {
       await UserModel.deleteUser(id);
       ctx.body = {
@@ -137,6 +136,9 @@ class UserController {
       console.log(err);
     }
   }
+  /**
+   * @func oauth - github授权
+   */
   static async oauth(ctx) {
     const clientID = 'eb12a53881547ca7c69f';
     const clientSecret = 'eb9ed46c6a4c5eb409e3d5169e5db2d81e632676';
@@ -168,8 +170,8 @@ class UserController {
         code: 0,
         msg: '登录成功'
       };
-      ctx.response.redirect(`http://localhost:8080/home?name=${name}`);
-      return 
+      ctx.response.redirect(`http://localhost:8080/?name=${name}`);
+      return;
     }
     let userinfo = {
       username: result.data.login,
@@ -188,7 +190,7 @@ class UserController {
       code: 0,
       msg: '授权登录成功'
     };
-    ctx.response.redirect(`http://localhost:8080/home?name=${name}`);
+    ctx.response.redirect(`http://localhost:8080/?name=${name}`);
   }
 }
 module.exports = UserController;
