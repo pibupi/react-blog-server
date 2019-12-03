@@ -43,13 +43,14 @@ class UserModel {
    * @func createUser -创建用户
    * @param {String} displayName -昵称
    */
-  static async createUser({ username, displayName, password, email ,phone}) {
+  static async createUser({ username, displayName, password, email ,phone,auth}) {
     return await User.create({
       username,
       displayName,
       password,
       email,
-      phone
+      phone,
+      auth
     });
   }
   /**
