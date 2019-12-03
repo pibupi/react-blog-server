@@ -16,19 +16,37 @@ class UserController {
         };
       } else {
         try {
-          const saltPassword = await UserModel.encrypt(password);
-          await UserModel.createUser({
-            username,
-            displayName,
-            email,
-            password: saltPassword,
-            phone
-          });
-          ctx.response.status = 200;
-          ctx.body = {
-            code: 0,
-            msg: '注册用户成功'
-          };
+          if(username === 'admin'){
+            const saltPassword = await UserModel.encrypt(password);
+            await UserModel.createUser({
+              username,
+              displayName,
+              email,
+              password: saltPassword,
+              phone,
+              auth:1
+            });
+            ctx.response.status = 200;
+            ctx.body = {
+              code: 0,
+              msg: '注册用户成功'
+            };
+          }else{
+            const saltPassword = await UserModel.encrypt(password);
+            await UserModel.createUser({
+              username,
+              displayName,
+              email,
+              password: saltPassword,
+              phone,
+              auth:2
+            });
+            ctx.response.status = 200;
+            ctx.body = {
+              code: 0,
+              msg: '注册用户成功'
+            };
+          }
         } catch (err) {
           console.log(err);
         }
@@ -74,7 +92,8 @@ class UserController {
             msg: '登录成功',
             username: user.username,
             displayName: user.displayName,
-            token
+            token,
+            auth:user.auth
           };
         }
       }
