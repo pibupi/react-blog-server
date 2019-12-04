@@ -7,7 +7,7 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const cors = require('koa2-cors');
 const AutoRegRouter = require('./utils/initRoute');
-const verifyToken = require('./middleware/verifyToken');
+const verifyToken = require('./middleware/verifytoken');
 const tokenUnAllowPath = require('./middleware/tokenUnAllowPath');
 // middlewares
 app.use(cors());
