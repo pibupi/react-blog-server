@@ -162,6 +162,7 @@ class UserController {
     const clientID = 'eb12a53881547ca7c69f';
     const clientSecret = 'eb9ed46c6a4c5eb409e3d5169e5db2d81e632676';
     const { code } = ctx.query;
+    console.log('code',code)
     const tokenResponse = await axios({
       method: 'post',
       url:
