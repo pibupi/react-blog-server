@@ -190,6 +190,31 @@ class ArticleController {
     }
   }
   /**
+   * @func getAdminArticleById - 后台获取文章详情
+   */
+  static async getAdminArticleById(ctx) {
+    const res = ctx.query;
+    try {
+      const article = await ArticleModel.findAdminArticleById(res);
+      if (article) {
+        ctx.body = {
+          code: 0,
+          data: {
+            article
+          },
+          msg: '获取文章详情成功'
+        };
+      } else {
+        ctx.body = {
+          code: 1,
+          msg: '资源不存在'
+        };
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  /**
    * @func getArticleOfCateogry - 前台根据分类获取文章列
    * @param {String} name - category_name 分了名称外键
    */

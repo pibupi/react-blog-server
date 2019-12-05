@@ -152,6 +152,16 @@ class ArticleModel {
     }
   }
   /**
+   * @func findAdminArticleById - 后台获取文章详情
+   */
+  static async findAdminArticleById(res) {
+    let { article_id } = res;
+    // 获取该篇文章详情内容
+    return await Article.findOne({
+      where: { id: article_id }
+    });
+  }
+  /**
    * @func updateArticleList - 前台点赞文章点赞数增加
    */
   static async updateArticleList(res) {
