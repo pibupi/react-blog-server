@@ -10,4 +10,6 @@ router.post('/article/add', ArticleController.addArticleList);
 router.post('/article/update', ArticleController.updateArticle);
 // 删除文章
 router.post('/article/delete', ArticleController.deleteArticle);
+// 获取文章详情
+router.get('/articleDetail', ArticleController.getAdminArticleById);
 module.exports = router;

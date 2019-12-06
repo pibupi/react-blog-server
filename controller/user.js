@@ -16,7 +16,7 @@ class UserController {
         };
       } else {
         try {
-          if(username === 'admin'){
+          if (username === 'admin') {
             const saltPassword = await UserModel.encrypt(password);
             await UserModel.createUser({
               username,
@@ -24,14 +24,14 @@ class UserController {
               email,
               password: saltPassword,
               phone,
-              auth:1
+              auth: 1
             });
             ctx.response.status = 200;
             ctx.body = {
               code: 0,
               msg: '注册用户成功'
             };
-          }else{
+          } else {
             const saltPassword = await UserModel.encrypt(password);
             await UserModel.createUser({
               username,
@@ -39,7 +39,7 @@ class UserController {
               email,
               password: saltPassword,
               phone,
-              auth:2
+              auth: 2
             });
             ctx.response.status = 200;
             ctx.body = {
@@ -93,7 +93,7 @@ class UserController {
             username: user.username,
             displayName: user.displayName,
             token,
-            auth:user.auth
+            auth: user.auth
           };
         }
       }
@@ -162,7 +162,7 @@ class UserController {
     const clientID = 'eb12a53881547ca7c69f';
     const clientSecret = 'eb9ed46c6a4c5eb409e3d5169e5db2d81e632676';
     const { code } = ctx.query;
-    console.log('code',code)
+    console.log('code', code);
     const tokenResponse = await axios({
       method: 'post',
       url:
@@ -191,6 +191,7 @@ class UserController {
         msg: '登录成功'
       };
       ctx.response.redirect(`http://localhost:8080/?name=${name}`);
+      // ctx.response.redirect(`http://39.105.218.164:80/?name=${name}`);
       return;
     }
     let userinfo = {
@@ -211,6 +212,7 @@ class UserController {
       msg: '授权登录成功'
     };
     ctx.response.redirect(`http://localhost:8080/?name=${name}`);
+    // ctx.response.redirect(`http://39.105.218.164:80/?name=${name}`);
   }
 }
 module.exports = UserController;
