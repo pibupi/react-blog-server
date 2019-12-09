@@ -21,5 +21,5 @@ let upload = multer({
   storage
 });
 router.prefix('/api/v1');
-router.post('/upload', upload.single('image'), UploadController.uploadImg)
+router.post('/upload', upload.single('image'), UploadController.uploadImg);
 module.exports = router;

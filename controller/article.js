@@ -46,7 +46,8 @@ class ArticleController {
         url,
         category_name,
         category_id,
-        author
+        author,
+        privates
       } = ctx.request.body;
       await ArticleModel.addArticle({
         content,
@@ -55,7 +56,8 @@ class ArticleController {
         url,
         category_name,
         category_id,
-        author
+        author,
+        privates
       });
       ctx.body = {
         code: 0,
@@ -77,7 +79,8 @@ class ArticleController {
         url,
         id,
         category_name,
-        category_id
+        category_id,
+        privates
       } = ctx.request.body;
       await ArticleModel.updateArticle({
         content,
@@ -86,7 +89,8 @@ class ArticleController {
         id,
         url,
         category_name,
-        category_id
+        category_id,
+        privates
       });
       ctx.body = {
         code: 0,
@@ -123,12 +127,13 @@ class ArticleController {
    * @description 此接口待完善！！！
    */
   static async getArticleAllList(ctx) {
-    const { current, keywords, pageSize } = ctx.query;
+    const { current, keywords, pageSize, username } = ctx.query;
     try {
       const articleList = await ArticleModel.findAllArticles(
         current,
         pageSize,
-        keywords
+        keywords,
+        username
       );
       if (articleList) {
         ctx.body = {
@@ -220,8 +225,13 @@ class ArticleController {
    */
   static async getArticleOfCateogry(ctx) {
     try {
-      const { id } = ctx.params;
-      let articleOfCategory = await ArticleModel.getArticleOfCateogry(id);
+      const { current, category_id, pageSize, username } = ctx.query;
+      let articleOfCategory = await ArticleModel.getArticleOfCateogry(
+        category_id,
+        pageSize,
+        current,
+        username
+      );
       if (articleOfCategory) {
         ctx.body = {
           code: 0,

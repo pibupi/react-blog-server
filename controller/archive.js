@@ -6,7 +6,7 @@ class archiveController {
   static async getArchive(ctx) {
     try {
       const { current, pageSize } = ctx.query;
-      let archives = await articleModel.findAllArticles(current, pageSize );
+      let archives = await articleModel.findAllArticles(current, pageSize);
       if (archives) {
         ctx.body = {
           code: 0,
@@ -22,9 +22,8 @@ class archiveController {
           msg: '获取失败'
         };
       }
-    }catch(err){
-      console.log(11)
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   }
 }
