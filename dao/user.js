@@ -43,7 +43,14 @@ class UserModel {
    * @func createUser -创建用户
    * @param {String} displayName -昵称
    */
-  static async createUser({ username, displayName, password, email ,phone,auth}) {
+  static async createUser({
+    username,
+    displayName,
+    password,
+    email,
+    phone,
+    auth
+  }) {
     return await User.create({
       username,
       displayName,
@@ -58,7 +65,6 @@ class UserModel {
    * @param {String} id - 用户id
    */
   static async deleteUser(id) {
-    console.log(id);
     return await User.destroy({
       where: { id }
     });

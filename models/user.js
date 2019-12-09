@@ -31,13 +31,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: '通过 bcrypt 加密后的密码'
       },
-      auth:{
+      auth: {
         type: DataTypes.INTEGER(11),
-        allowNull: true,
+        allowNull: true
       },
-      role_id:{
+      role_id: {
         type: DataTypes.INTEGER(11),
-        allowNull: true,
+        allowNull: true
       },
       createdAt: {
         type: DataTypes.DATE,

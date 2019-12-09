@@ -37,7 +37,8 @@ class ArticleModel {
     url,
     category_name,
     category_id,
-    author
+    author,
+    privates
   }) {
     return await Article.create({
       title,
@@ -46,7 +47,8 @@ class ArticleModel {
       url,
       category_name,
       category_id,
-      author
+      author,
+      privates
     });
   }
   /**
@@ -59,7 +61,8 @@ class ArticleModel {
     id,
     category_name,
     url,
-    category_id
+    category_id,
+    privates
   }) {
     return await Article.update(
       {
@@ -68,7 +71,8 @@ class ArticleModel {
         desc,
         category_name,
         url,
-        category_id
+        category_id,
+        privates
       },
       {
         where: { id }
@@ -87,36 +91,82 @@ class ArticleModel {
    * @func getArticleOfCateogry - 前台根据分类名称获取文章列表
    * @param category_name 分类名称外键
    */
-  static async getArticleOfCateogry(category_id) {
-    return await Article.findAll({
-      where: {
-        category_id
-      }
-    });
+  static async getArticleOfCateogry(category_id, pageSize, current, username) {
+    if (username === 'admin') {
+      return await Article.findAndCountAll({
+        where: {
+          category_id
+        },
+        offset: (current - 1) * +pageSize,
+        limit: +pageSize,
+        order: [['id', 'DESC']]
+      });
+    } else {
+      return await Article.findAndCountAll({
+        where: {
+          [Op.not]: [
+            {
+              privates: true
+            }
+          ],
+          category_id
+        },
+        offset: (current - 1) * +pageSize,
+        limit: +pageSize,
+        order: [['id', 'DESC']]
+      });
+    }
   }
   /**
    * @func findAllArticles - 前台获取所有文章
    */
-  static async findAllArticles(current, pageSize, keywords) {
-    return await Article.findAndCountAll({
-      where: {
-        [Op.or]: [
-          {
-            title: {
-              [Op.like]: '%' + keywords + '%'
+  static async findAllArticles(current, pageSize, keywords, username) {
+    if (username === 'admin') {
+      return await Article.findAndCountAll({
+        where: {
+          [Op.or]: [
+            {
+              title: {
+                [Op.like]: '%' + keywords + '%'
+              }
+            },
+            {
+              desc: {
+                [Op.like]: '% ' + keywords + '%'
+              }
             }
-          },
-          {
-            desc: {
-              [Op.like]: '% ' + keywords + '%'
+          ]
+        },
+        offset: (current - 1) * +pageSize,
+        limit: +pageSize,
+        order: [['id', 'DESC']]
+      });
+    } else {
+      return await Article.findAndCountAll({
+        where: {
+          [Op.not]: [
+            {
+              privates: true
             }
-          }
-        ]
-      },
-      offset: (current - 1) * +pageSize,
-      limit: +pageSize,
-      order: [['id', 'DESC']]
-    });
+          ],
+          [Op.or]: [
+            {
+              title: {
+                [Op.like]: '%' + keywords + '%'
+              }
+            },
+            {
+              desc: {
+                [Op.like]: '% ' + keywords + '%'
+              }
+            }
+          ]
+        },
+        offset: (current - 1) * +pageSize,
+        limit: +pageSize,
+        order: [['id', 'DESC']]
+      });
+    }
   }
   /**
    * @func findArticleById - 前台获取文章详情

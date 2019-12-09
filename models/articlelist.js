@@ -30,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: 0
       },
-      comment_count:{
+      comment_count: {
         type: DataTypes.INTEGER(11),
         allowNull: true,
         defaultValue: 0
       },
-      look_time:{
+      look_time: {
         type: DataTypes.INTEGER(11),
         allowNull: true,
         defaultValue: 0
@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       author: {
         type: DataTypes.STRING,
+        allowNull: true
+      },
+      privates: {
+        type: DataTypes.BOOLEAN,
         allowNull: true
       },
       url: {
