@@ -5,8 +5,13 @@ class archiveController {
    */
   static async getArchive(ctx) {
     try {
-      const { current, pageSize } = ctx.query;
-      let archives = await articleModel.findAllArticles(current, pageSize);
+      const { current, pageSize, keywords, username } = ctx.query;
+      let archives = await articleModel.findAllArticles(
+        current,
+        pageSize,
+        keywords,
+        username
+      );
       if (archives) {
         ctx.body = {
           code: 0,

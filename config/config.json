@@ -14,7 +14,8 @@
     "database": "react-blog-test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": 3306
+    "port": 3306,
+    "timezone": "+08:00"
   },
   "production": {
     "username": "root",
@@ -22,6 +23,7 @@
     "database": "my_blog",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": 3306
+    "port": 3306,
+    "timezone": "+08:00"
   }
 }
