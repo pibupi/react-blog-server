@@ -1,5 +1,5 @@
 const TOKEN_SECRET = 'my-blog-server';
-const TOKEN_EXPIRESIN = '1h';
+const TOKEN_EXPIRESIN = '600h';
 const jwt = require('jsonwebtoken');
 /**
  * @func createToken - 创建token

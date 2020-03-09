@@ -5,7 +5,7 @@ class UploadController {
   static async uploadImg(ctx) {
     ctx.body = {
       url: 'http://localhost:5001/upload/' + ctx.req.file.filename //返回文件名
-      // url: 'http://39.105.218.164:5001/upload/' + ctx.req.file.filename //返回文件名
+      // url: 'http://111.229.228.223:5001/upload/' + ctx.req.file.filename //返回文件名
     };
   }
 }
